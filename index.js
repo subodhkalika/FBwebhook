@@ -21,14 +21,10 @@ app.get('/webhook', (req, res) => {
   res.send('Hello World!');
 })
 
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-})
-
 app.post('/webhook', (req, res) => {
   console.log("headers", req.headers);
-  console.log("body", req.body);
+  console.log("body");
+  console.dir(req.body, {depth: null});
   res.status(200).send('Ok!');
 })
 
