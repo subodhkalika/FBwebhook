@@ -3,13 +3,15 @@ const app = express()
 require('dotenv').config();
 const port = process.env.PORT || 3023
 
+app.use(express.json());
+
 /* 
     Incase you are using mongodb atlas database uncomment below line
     and replace "mongoAtlasUri" with your mongodb atlas uri.
 */
 // mongoose.connect( mongoAtlasUri, {useNewUrlParser: true, useUnifiedTopology: true})
 
-app.get('/', (req, res) => {
+app.get('/webhook', (req, res) => {
   const challenge = req.query['hub.challenge'];
   const verify_token = req.query['hub.verify_token'];
   
@@ -17,6 +19,17 @@ app.get('/', (req, res) => {
     return res.send(challenge);
   }
   res.send('Hello World!');
+})
+
+
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+})
+
+app.post('/webhook', (req, res) => {
+  console.log("headers", req.headers);
+  console.log("body", req.body);
+  res.status(200).send('Ok!');
 })
 
 app.listen(port, () => {
